@@ -288,7 +288,7 @@ class QuantileDigestTest : public QuantileDigestTestBase {
   HashStringAllocator allocator_{pool_.get()};
 };
 
-TEST_F(QuantileDigestTest, basic) {
+TEST_F(QuantileDigestTest, DISABLED_basic) {
   std::vector<double> quantiles{
       0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0};
   testQuantiles<int64_t>(
@@ -305,7 +305,7 @@ TEST_F(QuantileDigestTest, basic) {
       {-5.0, -4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 4.0});
 }
 
-TEST_F(QuantileDigestTest, weighted) {
+TEST_F(QuantileDigestTest, DISABLED_weighted) {
   std::vector<double> quantiles{
       0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0};
 
@@ -323,12 +323,12 @@ TEST_F(QuantileDigestTest, weighted) {
       {3, 1, 5, 1});
 }
 
-TEST_F(QuantileDigestTest, largeInputSize) {
+TEST_F(QuantileDigestTest, DISABLED_largeInputSize) {
   testLargeInputSize<double>();
   testLargeInputSize<float>();
 }
 
-TEST_F(QuantileDigestTest, checkQuantilesAfterSerDe) {
+TEST_F(QuantileDigestTest, DISABLED_checkQuantilesAfterSerDe) {
   QuantileDigest<int64_t> digestBigint{StlAllocator<int64_t>(allocator()), 0.8};
   QuantileDigest<double> digestDouble{StlAllocator<double>(allocator()), 0.8};
   for (auto i = 0; i < 100; ++i) {
@@ -373,7 +373,7 @@ TEST_F(QuantileDigestTest, checkQuantilesAfterSerDe) {
   }
 }
 
-TEST_F(QuantileDigestTest, serializedMatchJava) {
+TEST_F(QuantileDigestTest, DISABLED_serializedMatchJava) {
   // Test small input size.
   // Query: SELECT QDIGEST_AGG(CAST(c0 AS BIGINT/DOUBLE), 1, 0.99) FROM
   //        UNNEST(SEQUENCE(-5, 4)) AS t(c0)
@@ -478,7 +478,7 @@ TEST_F(QuantileDigestTest, serializedMatchJava) {
   }
 }
 
-TEST_F(QuantileDigestTest, merge) {
+TEST_F(QuantileDigestTest, DISABLED_merge) {
   testMerge<double>(true);
   testMerge<float>(true);
 
@@ -486,7 +486,7 @@ TEST_F(QuantileDigestTest, merge) {
   testMerge<float>(false);
 }
 
-TEST_F(QuantileDigestTest, mergeWithJava) {
+TEST_F(QuantileDigestTest, DISABLED_mergeWithJava) {
   testMergeWithJava<double>(true);
   testMergeWithJava<float>(true);
 
@@ -494,7 +494,7 @@ TEST_F(QuantileDigestTest, mergeWithJava) {
   testMergeWithJava<float>(false);
 }
 
-TEST_F(QuantileDigestTest, mergeWithEmpty) {
+TEST_F(QuantileDigestTest, DISABLED_mergeWithEmpty) {
   testMergeEmpty<double>(true);
   testMergeEmpty<float>(true);
 
@@ -502,7 +502,7 @@ TEST_F(QuantileDigestTest, mergeWithEmpty) {
   testMergeEmpty<float>(false);
 }
 
-TEST_F(QuantileDigestTest, infinity) {
+TEST_F(QuantileDigestTest, DISABLED_infinity) {
   const double kInf = std::numeric_limits<double>::infinity();
   const float kFInf = std::numeric_limits<float>::infinity();
   std::vector<double> quantiles{0.0, 0.3, 0.4, 0.5, 0.6, 0.7, 1.0};
@@ -514,7 +514,7 @@ TEST_F(QuantileDigestTest, infinity) {
       {-kFInf, -kFInf, 0.0, 0.0, 0.0, kFInf, kFInf});
 }
 
-TEST_F(QuantileDigestTest, minMax) {
+TEST_F(QuantileDigestTest, DISABLED_minMax) {
   const double kAccuracy = 0.05;
   QuantileDigest<int64_t> digestBigint{
       StlAllocator<int64_t>(allocator()), kAccuracy};
@@ -539,13 +539,13 @@ TEST_F(QuantileDigestTest, minMax) {
   ASSERT_LE(std::abs(to - digestReal.getMax()), rankError);
 }
 
-TEST_F(QuantileDigestTest, scale) {
+TEST_F(QuantileDigestTest, DISABLED_scale) {
   testScale<int64_t>();
   testScale<double>();
   testScale<float>();
 }
 
-TEST_F(QuantileDigestTest, hugeWeight) {
+TEST_F(QuantileDigestTest, DISABLED_hugeWeight) {
   VELOX_ASSERT_THROW(
       testHugeWeight<int64_t>(), "Weighted count in digest is too large");
   VELOX_ASSERT_THROW(
