@@ -18,6 +18,7 @@
 #include <memory>
 #include <vector>
 
+#include <fmt/ostream.h>
 #include <re2/re2.h>
 #include "velox/expression/VectorFunction.h"
 #include "velox/functions/Udf.h"
@@ -406,6 +407,8 @@ struct Re2RegexpSplit {
       const arg_type<Varchar>& pattern) {
     auto* re = cache_.findOrCompile(pattern);
 
+    fmt::println("string = '{}', size = {}", string, string.size());
+
     const auto re2String = re2::StringPiece(string.data(), string.size());
 
     size_t pos = 0;
@@ -423,6 +426,8 @@ struct Re2RegexpSplit {
       const auto offset = fullMatch.data() - start;
       const auto size = fullMatch.size();
 
+      fmt::println("Append: ({}, {})", pos, offset);
+
       out.add_item().setNoCopy(StringView(string.data() + pos, offset - pos));
 
       pos = offset + size;
@@ -431,8 +436,11 @@ struct Re2RegexpSplit {
       }
     }
 
-    out.add_item().setNoCopy(
-        StringView(string.data() + pos, string.size() - pos));
+    fmt::println("Try to append: ({}, {})", pos, string.size());
+    auto lastSlice = LIKELY(pos <= string.size())
+        ? StringView(string.data() + pos, string.size() - pos)
+        : StringView(nullptr, 0);
+    out.add_item().setNoCopy(lastSlice);
   }
 
  private:
