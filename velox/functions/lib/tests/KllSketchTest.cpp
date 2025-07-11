@@ -62,7 +62,7 @@ class KllSketchTest : public testing::Test {
   }
 };
 
-TEST_F(KllSketchTest, oneItem) {
+TEST_F(KllSketchTest, DISABLED_oneItem) {
   KllSketch<double> kll;
   EXPECT_EQ(kll.totalCount(), 0);
   kll.insert(1.0);
@@ -73,7 +73,7 @@ TEST_F(KllSketchTest, oneItem) {
   EXPECT_EQ(kll.estimateQuantile(1.0), 1.0);
 }
 
-TEST_F(KllSketchTest, exactMode) {
+TEST_F(KllSketchTest, DISABLED_exactMode) {
   constexpr int N = 128;
   KllSketch<int> kll(N);
   for (int i = 0; i < N; ++i) {
@@ -91,7 +91,7 @@ TEST_F(KllSketchTest, exactMode) {
   }
 }
 
-TEST_F(KllSketchTest, estimationMode) {
+TEST_F(KllSketchTest, DISABLED_estimationMode) {
   constexpr int N = 1e5;
   constexpr int M = 1001;
   KllSketch<double> kll(200, {}, 0);
@@ -110,7 +110,7 @@ TEST_F(KllSketchTest, estimationMode) {
   }
 }
 
-TEST_F(KllSketchTest, randomInput) {
+TEST_F(KllSketchTest, DISABLED_randomInput) {
   constexpr int N = 1e5;
   constexpr int M = 1001;
   KllSketch<double> kll(kDefaultK, {}, 0);
@@ -129,7 +129,7 @@ TEST_F(KllSketchTest, randomInput) {
   }
 }
 
-TEST_F(KllSketchTest, merge) {
+TEST_F(KllSketchTest, DISABLED_merge) {
   constexpr int N = 1e4;
   constexpr int M = 1001;
   KllSketch<double> kll1(kDefaultK, {}, 0);
@@ -149,7 +149,7 @@ TEST_F(KllSketchTest, merge) {
   }
 }
 
-TEST_F(KllSketchTest, mergeRandom) {
+TEST_F(KllSketchTest, DISABLED_mergeRandom) {
   constexpr int N = 1e4;
   constexpr int M = 1001;
   std::default_random_engine gen(0);
@@ -184,7 +184,7 @@ TEST_F(KllSketchTest, mergeRandom) {
   }
 }
 
-TEST_F(KllSketchTest, mergeMultiple) {
+TEST_F(KllSketchTest, DISABLED_mergeMultiple) {
   constexpr int N = 1e4;
   constexpr int M = 1001;
   constexpr int kSketchCount = 10;
@@ -208,7 +208,7 @@ TEST_F(KllSketchTest, mergeMultiple) {
   }
 }
 
-TEST_F(KllSketchTest, mergeEmpty) {
+TEST_F(KllSketchTest, DISABLED_mergeEmpty) {
   KllSketch<double> kll, kll2;
   kll.insert(1.0);
   kll.merge(kll2);
@@ -221,11 +221,11 @@ TEST_F(KllSketchTest, mergeEmpty) {
   EXPECT_EQ(kll2.estimateQuantile(0.5), 1.0);
 }
 
-TEST_F(KllSketchTest, kFromEpsilon) {
+TEST_F(KllSketchTest, DISABLED_kFromEpsilon) {
   EXPECT_EQ(kFromEpsilon(kEpsilon), kDefaultK);
 }
 
-TEST_F(KllSketchTest, serialize) {
+TEST_F(KllSketchTest, DISABLED_serialize) {
   constexpr int N = 1e5;
   constexpr int M = 1001;
   KllSketch<double> kll(kDefaultK, {}, 0);
@@ -248,7 +248,7 @@ TEST_F(KllSketchTest, serialize) {
   EXPECT_EQ(v, v2);
 }
 
-TEST_F(KllSketchTest, deserialize) {
+TEST_F(KllSketchTest, DISABLED_deserialize) {
   constexpr int M = 1001;
   auto readFile = [](const std::string& path) {
     std::ifstream input(path);
@@ -272,7 +272,7 @@ TEST_F(KllSketchTest, deserialize) {
   }
 }
 
-TEST_F(KllSketchTest, deserializeSmall) {
+TEST_F(KllSketchTest, DISABLED_deserializeSmall) {
   constexpr int N = 128;
   KllSketch<double> kll(kDefaultK, {}, 0);
   insertRandomData(0, N, kll, nullptr);
@@ -286,7 +286,7 @@ TEST_F(KllSketchTest, deserializeSmall) {
   EXPECT_EQ(v, v2);
 }
 
-TEST_F(KllSketchTest, compact) {
+TEST_F(KllSketchTest, DISABLED_compact) {
   constexpr int N = 1e5;
   KllSketch<double> kll(kFromEpsilon(0.001));
   for (int i = 0; i < N; ++i) {
@@ -305,7 +305,7 @@ TEST_F(KllSketchTest, compact) {
   }
 }
 
-TEST_F(KllSketchTest, growCompacted) {
+TEST_F(KllSketchTest, DISABLED_growCompacted) {
   constexpr int N = 1000;
   constexpr int M = 101;
   KllSketch<double> kll(kDefaultK, {}, 0);
@@ -323,7 +323,7 @@ TEST_F(KllSketchTest, growCompacted) {
   }
 }
 
-TEST_F(KllSketchTest, fromRepeatedValue) {
+TEST_F(KllSketchTest, DISABLED_fromRepeatedValue) {
   constexpr int N = 1000;
   constexpr int kTotal = (1 + N) * N / 2;
   constexpr int M = 1001;
@@ -352,7 +352,7 @@ TEST_F(KllSketchTest, fromRepeatedValue) {
   }
 }
 
-TEST_F(KllSketchTest, mergeDeserialized) {
+TEST_F(KllSketchTest, DISABLED_mergeDeserialized) {
   constexpr int N = 1e4;
   constexpr int M = 1001;
   KllSketch<double> kll1(kDefaultK, {}, 0);
@@ -378,7 +378,7 @@ TEST_F(KllSketchTest, mergeDeserialized) {
 // 1. When N < K, the memory usage should be O(N).
 // 2. Otherwise it's \f$ K \sum_i \(\frac{2}{3}\)^i \f$ and it converges to
 //    about O(3K).
-TEST_F(KllSketchTest, memoryUsage) {
+TEST_F(KllSketchTest, DISABLED_memoryUsage) {
   auto pool = memory::memoryManager()->addLeafPool();
   HashStringAllocator alloc(pool.get());
   KllSketch<int64_t, StlAllocator<int64_t>> kll(

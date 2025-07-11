@@ -18,6 +18,7 @@
 
 #include <cstdint>
 #include <string>
+#include <fmt/ranges.h>
 #include "velox/core/PlanNode.h"
 #include "velox/exec/fuzzer/ResultVerifier.h"
 #include "velox/exec/tests/utils/AssertQueryBuilder.h"

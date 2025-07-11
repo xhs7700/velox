@@ -15,6 +15,7 @@
  */
 
 #include <gtest/gtest.h>
+#include <fmt/ranges.h>
 
 #include "velox/exec/PrefixSort.h"
 #include "velox/exec/tests/utils/OperatorTestBase.h"

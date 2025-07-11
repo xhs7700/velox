@@ -25,6 +25,8 @@
 
 #include "velox/common/base/Status.h"
 
+#include <fmt/ranges.h>
+
 namespace facebook::velox::functions::geospatial {
 
 /// Utility macro used to wrap GEOS library calls in a try-catch block,

@@ -502,11 +502,12 @@ TEST_F(Re2FunctionsTest, likeDeterminePatternKind) {
         PatternMetadata patternMetadata =
             determinePatternKind(pattern, std::nullopt);
 
-        SCOPED_TRACE(fmt::format(
-            "pattern: '{}', length: {}, actualLength: {}",
-            pattern,
-            length,
-            patternMetadata.length()));
+        SCOPED_TRACE(
+            fmt::format(
+                "pattern: '{}', length: {}, actualLength: {}",
+                pattern,
+                length,
+                patternMetadata.length()));
         EXPECT_EQ(patternMetadata.patternKind(), patternKind);
         EXPECT_EQ(patternMetadata.length(), length);
       };
@@ -514,8 +515,9 @@ TEST_F(Re2FunctionsTest, likeDeterminePatternKind) {
   auto testPatternString = [&](std::string_view pattern,
                                PatternKind patternKind,
                                std::string_view fixedPattern) {
-    SCOPED_TRACE(fmt::format(
-        "pattern: '{}', fixedPattern: '{}'", pattern, fixedPattern));
+    SCOPED_TRACE(
+        fmt::format(
+            "pattern: '{}', fixedPattern: '{}'", pattern, fixedPattern));
 
     PatternMetadata patternMetadata =
         determinePatternKind(pattern, std::nullopt);
